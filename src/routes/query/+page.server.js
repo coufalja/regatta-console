@@ -5,8 +5,8 @@ import { kv } from '$lib/server/kv';
 export const actions = {
 	query: async ({ request }) => {
 		const data = await request.formData();
-		const table = data.get('table') || '';
-		const key = data.get('query') || '';
+		const table = data.get('table') + '';
+		const key = data.get('query') + '';
 		const req = {
 			table,
 			key
@@ -14,8 +14,12 @@ export const actions = {
 		try {
 			const response = await kv.range(req);
 			return { request: req, response };
-		} catch (e) {
-			return { request: req, error: e.Message };
+		} catch (err) {
+			let error = 'unknown';
+			if (err instanceof Error) {
+				error = err.message;
+			}
+			return { request: req, error };
 		}
 	}
 };
