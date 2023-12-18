@@ -5,19 +5,19 @@ type OriginalCall<T, U> = (
 	metadata: Metadata,
 	options: Partial<CallOptions>,
 	callback: (err: ServiceError | null, res?: U) => void
-) => ClientUnaryCall
+) => ClientUnaryCall;
 
 type PromisifiedCall<T, U> = (
 	request: T,
 	metadata?: Metadata,
 	options?: Partial<CallOptions>
-) => Promise<U>
+) => Promise<U>;
 
 export type PromisifiedClient<C> = { $: C } & {
 	[prop in Exclude<keyof C, keyof Client>]: C[prop] extends OriginalCall<infer T, infer U>
 		? PromisifiedCall<T, U>
-		: never
-}
+		: never;
+};
 
 export function promisify<C extends Client>(client: C) {
 	return new Proxy(client, {
@@ -30,13 +30,12 @@ export function promisify<C extends Client>(client: C) {
 			if (typeof func === 'function')
 				return (...args: unknown[]) => {
 					return new Promise((resolve, reject) => {
-							Reflect.apply(func, target, [
-								...args,
-								(err: unknown, res: unknown) => (err ? reject(err) : resolve(res))
-							]);
-						}
-					);
-				}
+						Reflect.apply(func, target, [
+							...args,
+							(err: unknown, res: unknown) => (err ? reject(err) : resolve(res))
+						]);
+					});
+				};
 		}
 	}) as unknown as PromisifiedClient<C>;
 }

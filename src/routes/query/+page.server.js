@@ -1,6 +1,5 @@
 import { kv } from '$lib/server/kv';
 
-
 /** @type {import('./$types').Actions} */
 export const actions = {
 	query: async ({ request }) => {
