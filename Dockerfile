@@ -18,4 +18,6 @@ FROM oven/bun:1.0.18-alpine
 WORKDIR /app
 
 COPY --from=build /app/build /app
+RUN bun install
+
 CMD ["bun", "index.js"]
