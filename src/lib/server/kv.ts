@@ -5,7 +5,7 @@ import type { PutRequest } from '$lib/proto/regatta/v1/PutRequest';
 import type { PutResponse } from '$lib/proto/regatta/v1/PutResponse';
 import type { RangeRequest } from '$lib/proto/regatta/v1/RangeRequest';
 import type { RangeResponse } from '$lib/proto/regatta/v1/RangeResponse';
-import { cr, regatta } from '$lib/server/grpc';
+import { cr, regatta, REGATTA_ADDRESS } from '$lib/server/grpc';
 import type { KVClient } from '$lib/proto/regatta/v1/KV';
 
 export interface KV {
@@ -129,4 +129,4 @@ interface Args extends RangeRequest, DeleteRangeRequest, PutRequest {
 	kind: string;
 }
 
-export const kv = new KVImpl(new regatta.v1.KV('localhost:5201', cr));
+export const kv = new KVImpl(new regatta.v1.KV(REGATTA_ADDRESS, cr));
