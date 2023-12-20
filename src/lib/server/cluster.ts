@@ -1,0 +1,70 @@
+import type { MemberListRequest } from '$lib/proto/regatta/v1/MemberListRequest';
+import type { MemberListResponse } from '$lib/proto/regatta/v1/MemberListResponse';
+import type * as grpc from '@grpc/grpc-js';
+import type { StatusResponse } from '$lib/proto/regatta/v1/StatusResponse';
+import type { ClusterClient } from '$lib/proto/regatta/v1/Cluster';
+import type { StatusRequest } from '$lib/proto/regatta/v1/StatusRequest';
+import { cr, regatta } from '$lib/server/grpc';
+
+export interface Cluster {
+	memberList(argument: MemberListRequest, options: grpc.CallOptions): Promise<MemberListResponse>;
+
+	memberList(argument: MemberListRequest): Promise<MemberListResponse>;
+
+	status(
+		argument: StatusRequest,
+		target: string,
+		options: grpc.CallOptions
+	): Promise<StatusResponse>;
+	status(argument: StatusRequest, target: string): Promise<StatusResponse>;
+	status(argument: StatusRequest): Promise<StatusResponse>;
+}
+
+class ClusterImpl implements Cluster {
+	constructor(private client: ClusterClient) {}
+
+	status(
+		argument: StatusRequest,
+		target: string,
+		options: grpc.CallOptions
+	): Promise<StatusResponse>;
+	status(argument: StatusRequest, target: string): Promise<StatusResponse>;
+	status(argument: StatusRequest): Promise<StatusResponse>;
+	status(
+		argument: StatusRequest,
+		target?: string,
+		options?: grpc.CallOptions
+	): Promise<StatusResponse> {
+		let client: ClusterClient;
+		if (!target) {
+			client = this.client;
+		} else {
+			client = new regatta.v1.Cluster(target, cr);
+		}
+		return new Promise<StatusResponse>((resolve, reject) => {
+			client.Status(argument, options || ({} as grpc.CallOptions), (err, value) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(value!);
+				}
+			});
+		});
+	}
+
+	memberList(argument: MemberListRequest, options: grpc.CallOptions): Promise<MemberListResponse>;
+	memberList(argument: MemberListRequest): Promise<MemberListResponse>;
+	memberList(argument: MemberListRequest, options?: grpc.CallOptions): Promise<MemberListResponse> {
+		return new Promise<MemberListResponse>((resolve, reject) => {
+			this.client.MemberList(argument, options || ({} as grpc.CallOptions), (err, value) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(value!);
+				}
+			});
+		});
+	}
+}
+
+export const cluster = new ClusterImpl(new regatta.v1.Cluster('localhost:5201', cr));
