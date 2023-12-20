@@ -4,7 +4,7 @@ import type * as grpc from '@grpc/grpc-js';
 import type { StatusResponse } from '$lib/proto/regatta/v1/StatusResponse';
 import type { ClusterClient } from '$lib/proto/regatta/v1/Cluster';
 import type { StatusRequest } from '$lib/proto/regatta/v1/StatusRequest';
-import { cr, regatta } from '$lib/server/grpc';
+import { cr, regatta, REGATTA_ADDRESS } from '$lib/server/grpc';
 
 export interface Cluster {
 	memberList(argument: MemberListRequest, options: grpc.CallOptions): Promise<MemberListResponse>;
@@ -16,7 +16,9 @@ export interface Cluster {
 		target: string,
 		options: grpc.CallOptions
 	): Promise<StatusResponse>;
+
 	status(argument: StatusRequest, target: string): Promise<StatusResponse>;
+
 	status(argument: StatusRequest): Promise<StatusResponse>;
 }
 
@@ -67,4 +69,4 @@ class ClusterImpl implements Cluster {
 	}
 }
 
-export const cluster = new ClusterImpl(new regatta.v1.Cluster('localhost:5201', cr));
+export const cluster = new ClusterImpl(new regatta.v1.Cluster(REGATTA_ADDRESS, cr));
