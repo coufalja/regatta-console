@@ -9,7 +9,10 @@ import { cr, regatta } from '$lib/server/grpc';
 import type { KVClient } from '$lib/proto/regatta/v1/KV';
 
 export interface KV {
-	deleteRange(argument: DeleteRangeRequest, options: grpc.CallOptions): Promise<DeleteRangeResponse>;
+	deleteRange(
+		argument: DeleteRangeRequest,
+		options: grpc.CallOptions
+	): Promise<DeleteRangeResponse>;
 
 	deleteRange(argument: DeleteRangeRequest): Promise<DeleteRangeResponse>;
 
@@ -23,20 +26,29 @@ export interface KV {
 }
 
 class KVImpl implements KV {
-	constructor(private client: KVClient) {
-	}
+	constructor(private client: KVClient) {}
 
-	deleteRange(argument: DeleteRangeRequest, options: grpc.CallOptions): Promise<DeleteRangeResponse>;
+	deleteRange(
+		argument: DeleteRangeRequest,
+		options: grpc.CallOptions
+	): Promise<DeleteRangeResponse>;
 	deleteRange(argument: DeleteRangeRequest): Promise<DeleteRangeResponse>;
-	deleteRange(argument: DeleteRangeRequest, options?: grpc.CallOptions): Promise<DeleteRangeResponse> {
+	deleteRange(
+		argument: DeleteRangeRequest,
+		options?: grpc.CallOptions
+	): Promise<DeleteRangeResponse> {
 		return new Promise<DeleteRangeResponse>((resolve, reject) => {
-			this.client.DeleteRange(this.fixArgs({ kind: 'delete', ...argument }), options || {} as grpc.CallOptions, (err, value) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(value!);
+			this.client.DeleteRange(
+				this.fixArgs({ kind: 'delete', ...argument }),
+				options || ({} as grpc.CallOptions),
+				(err, value) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(value!);
+					}
 				}
-			});
+			);
 		});
 	}
 
@@ -44,13 +56,17 @@ class KVImpl implements KV {
 	put(argument: PutRequest): Promise<PutResponse>;
 	put(argument: PutRequest, options?: grpc.CallOptions): Promise<PutResponse> {
 		return new Promise<PutResponse>((resolve, reject) => {
-			this.client.Put(this.fixArgs({ kind: 'put', ...argument }), options || {} as grpc.CallOptions, (err, value) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(value!);
+			this.client.Put(
+				this.fixArgs({ kind: 'put', ...argument }),
+				options || ({} as grpc.CallOptions),
+				(err, value) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(value!);
+					}
 				}
-			});
+			);
 		});
 	}
 
@@ -58,16 +74,19 @@ class KVImpl implements KV {
 	range(argument: RangeRequest): Promise<RangeResponse>;
 	range(argument: RangeRequest, options?: grpc.CallOptions): Promise<RangeResponse> {
 		return new Promise<RangeResponse>((resolve, reject) => {
-			this.client.Range(this.fixArgs({ kind: 'range', ...argument }), options || {} as grpc.CallOptions, (err, value) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(value!);
+			this.client.Range(
+				this.fixArgs({ kind: 'range', ...argument }),
+				options || ({} as grpc.CallOptions),
+				(err, value) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(value!);
+					}
 				}
-			});
+			);
 		});
 	}
-
 
 	private fixArgs(argument: Args) {
 		const isRange = (p: Args) => p.kind === 'range';

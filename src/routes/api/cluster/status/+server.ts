@@ -19,7 +19,7 @@ export const GET: RequestHandler = async () => {
 		const c = promisify(new regatta.v1.Cluster(clientURLs[0].split('://')[1], cr));
 		// @ts-expect-error promisify return unknown
 		const st: StatusResponse = await c.status({});
-		status.push({...members[i], status: st});
+		status.push({ ...members[i], status: st });
 	}
 	// @ts-expect-error type err
 	return json(status.sort((a, b) => a.id - b.id));
