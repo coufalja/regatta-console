@@ -1,23 +1,17 @@
 <script lang="ts">
+	import { localStorageStore } from '@skeletonlabs/skeleton';
 	import { applyAction, enhance } from '$app/forms';
 	import type { ActionData, PageData } from './$types';
+	import { type Writable } from 'svelte/store';
 
 	export let data: PageData;
-
-	export let form: ActionData;
-
-	let queries: ActionData[] = [];
-	$: {
-		if (form) {
-			queries = [...queries, form];
-		}
-	}
+	const queries: Writable<ActionData[]> = localStorageStore('queries', []);
 </script>
 
-<div class="flex flex-col h-full">
+<div class="flex py-10 p-4 mx-auto flex-col h-full">
 	<div class="flex-col grow">
 		<dl class="list">
-			{#each queries as query}
+			{#each $queries as query}
 				<div class="list-item grow">
 					<div class="card p-6">
 						<p>
@@ -54,7 +48,14 @@
 			if (button) button.disabled = true;
 			return async ({ result, update }) => {
 				if (button) button.disabled = false;
-				if (result.type === 'error') update();
+				switch (result.type) {
+					case 'success': {
+						queries.update((value) => [...value, result.data]);
+						break;
+					}
+					default:
+						update();
+				}
 				await applyAction(result);
 			};
 		}}
