@@ -12,13 +12,13 @@ export const actions = {
 		};
 		try {
 			const response = await kv.range(req);
-			return { request: req, response };
+			return { request: req, response, error: undefined };
 		} catch (err) {
 			let error = 'unknown';
 			if (err instanceof Error) {
 				error = err.message;
 			}
-			return { request: req, error };
+			return { request: req, response: undefined, error };
 		}
 	}
 };

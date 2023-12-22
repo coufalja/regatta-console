@@ -3,10 +3,9 @@
 	export let data;
 </script>
 
-<h3 class="h3">ClusterNodes</h3>
-<div class="container grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex justify-evenly py-10 p-4 mx-auto h-full gap-4">
 	{#each data.members ?? [] as member}
-		<div class="card">
+		<div class="card p-6 space-y-6 shadow-xl">
 			<header class="card-header">
 				<div class="text-xs opacity-50">Node: {member.name}</div>
 			</header>
