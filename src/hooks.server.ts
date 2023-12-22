@@ -23,18 +23,19 @@ const authorization: Handle = async ({ event, resolve }): Promise<Response> => {
 
 const authProviders = () => {
 	const providers = [];
-	if (dev) {
-		providers.push(
-			Credentials({
-				authorize: () => {
+	providers.push(
+		Credentials({
+			authorize: () => {
+				if (dev) {
 					return {
 						name: 'fake',
 						email: 'fake@google.com'
 					};
 				}
-			})
-		);
-	}
+				return null;
+			}
+		})
+	);
 	if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
 		providers.push(
 			Google({ clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET })
@@ -54,10 +55,10 @@ const authProviders = () => {
 	}
 	return providers;
 };
-
 export const handle: Handle = sequence(
 	SvelteKitAuth({
-		secret: env.AUTH_SECRET,
+		secret: dev ? 'fake' : env.AUTH_SECRET,
+		trustHost: true,
 		providers: authProviders()
 	}),
 	authorization
