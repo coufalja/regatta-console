@@ -9,8 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
-		"lint": "bunx prettier --plugin-search-dir . --check . && eslint .",
-		"format": "bunx prettier --plugin-search-dir . --write .",
+		"lint": "bunx prettier --check . && eslint .",
+		"format": "bunx prettier --write .",
 		"prototypes": "proto-loader-gen-types --bytes=String --longs=String --enums=String --defaults=true --oneofs=true --grpcLib=@grpc/grpc-js --outDir=./src/lib/proto ./src/lib/proto/*.proto"
 	},
 	"devDependencies": {
