@@ -15,7 +15,7 @@
 			<!-- App Bar -->
 			<AppBar>
 				<svelte:fragment slot="lead">
-					<strong class="text-xl uppercase">Regatta console</strong>
+					<a href="/"><strong class="text-xl uppercase">Regatta console</strong></a>
 				</svelte:fragment>
 				<svelte:fragment slot="trail">
 					<a
@@ -42,17 +42,25 @@
 		<svelte:fragment slot="sidebarLeft">
 			<AppRail>
 				<AppRailAnchor href="/cluster" selected={$page.url.pathname === '/cluster'}>
-					<svelte:fragment slot="lead"><IconCluster></IconCluster></svelte:fragment>
+					<svelte:fragment slot="lead">
+						<IconCluster></IconCluster>
+					</svelte:fragment>
 					<span>Cluster</span>
 				</AppRailAnchor>
 				<AppRailAnchor href="/query" selected={$page.url.pathname === '/query'}>
-					<svelte:fragment slot="lead"><IconQuery></IconQuery></svelte:fragment>
+					<svelte:fragment slot="lead">
+						<IconQuery></IconQuery>
+					</svelte:fragment>
 					<span>Query</span>
 				</AppRailAnchor>
-				<AppRailAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
-					<svelte:fragment slot="lead"><IconSettings></IconSettings></svelte:fragment>
-					<span>Settings</span>
-				</AppRailAnchor>
+				<svelte:fragment slot="trail">
+					<AppRailAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
+						<svelte:fragment slot="lead">
+							<IconSettings></IconSettings>
+						</svelte:fragment>
+						<span>Settings</span>
+					</AppRailAnchor>
+				</svelte:fragment>
 			</AppRail>
 		</svelte:fragment>
 		<!-- Page Route Content -->
