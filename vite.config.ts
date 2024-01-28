@@ -6,7 +6,11 @@ import Icons from 'unplugin-icons/vite';
 export default defineConfig({
 	plugins: [
 		sveltekit(),
-		purgeCss(),
+		purgeCss({
+			safelist: {
+				greedy: [/^hljs-/]
+			}
+		}),
 		Icons({
 			compiler: 'svelte'
 		})

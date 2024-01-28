@@ -1,11 +1,38 @@
 <script>
 	import '../../app.postcss';
+	import 'highlight.js/styles/github-dark-dimmed.css';
+
 	import { page } from '$app/stores';
-	import { AppBar, AppRail, AppRailAnchor, AppShell, Avatar } from '@skeletonlabs/skeleton';
+	import {
+		AppBar,
+		AppRail,
+		AppRailAnchor,
+		AppShell,
+		Avatar,
+		storeHighlightJs
+	} from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
 	import IconCluster from 'virtual:icons/carbon/edge-cluster';
 	import IconQuery from 'virtual:icons/carbon/query';
 	import IconSettings from 'virtual:icons/carbon/settings';
+
+	// highlight.js
+	import hljs from 'highlight.js/lib/core';
+	import xml from 'highlight.js/lib/languages/xml';
+	import css from 'highlight.js/lib/languages/css';
+	import json from 'highlight.js/lib/languages/json';
+	import javascript from 'highlight.js/lib/languages/javascript';
+	import typescript from 'highlight.js/lib/languages/typescript';
+	import shell from 'highlight.js/lib/languages/shell';
+	// Register each imported language module
+	hljs.registerLanguage('xml', xml); // for HTML
+	hljs.registerLanguage('css', css);
+	hljs.registerLanguage('json', json);
+	hljs.registerLanguage('javascript', javascript);
+	hljs.registerLanguage('typescript', typescript);
+	hljs.registerLanguage('shell', shell);
+
+	storeHighlightJs.set(hljs);
 </script>
 
 <!-- App Shell -->
