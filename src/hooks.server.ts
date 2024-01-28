@@ -8,8 +8,8 @@ import { authProviders } from '$lib/server/auth';
 const authorization: Handle = async ({ event, resolve }): Promise<Response> => {
 	// Protect any routes under /authenticated
 	if (!event.url.pathname.startsWith('/auth')) {
-		const session = await event.locals.getSession();
-		if (!session) {
+		const auth = await event.locals.auth();
+		if (!auth) {
 			throw redirect(303, '/auth');
 		}
 	}

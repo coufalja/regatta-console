@@ -12,17 +12,17 @@
 
 <div class="py-10 p-0 mx-auto max-w-md">
 	<div class="card p-6 space-y-6 shadow-xl">
-		{#if $page.data.session}
+		{#if $page.data.auth}
 			<p class="font-semibold">You are logged in</p>
 			<div class="flex justify-start flex-wrap">
 				<Avatar
 					class="me-4"
-					src={$page.data.session?.user?.image || ''}
-					initials={$page.data.session?.user?.name || ''}
+					src={$page.data.auth?.user?.image || ''}
+					initials={$page.data.auth?.user?.name || ''}
 				></Avatar>
 				<div>
-					<p class="font-light">{$page.data.session?.user?.name}</p>
-					<p class="font-light">{$page.data.session?.user?.email}</p>
+					<p class="font-light">{$page.data.auth?.user?.name}</p>
+					<p class="font-light">{$page.data.auth?.user?.email}</p>
 				</div>
 			</div>
 			<div class="flex justify-between flex-wrap">
@@ -31,20 +31,26 @@
 		{:else}
 			<p class="font-semibold">Welcome, login with</p>
 			{#if data.isGoogleAvailable}
-				<button on:click={() => signIn('google')} class="btn variant-filled-surface w-full gap-2">
+				<button
+					on:click={() => signIn('google', { callbackUrl: '/' })}
+					class="btn variant-filled-surface w-full gap-2"
+				>
 					<IconBrandGoogle />
 					Google
 				</button>
 			{/if}
 			{#if data.isOktaAvailable}
-				<button on:click={() => signIn('okta')} class="btn variant-filled-surface w-full gap-2">
+				<button
+					on:click={() => signIn('okta', { callbackUrl: '/' })}
+					class="btn variant-filled-surface w-full gap-2"
+				>
 					<IconBrandOkta />
 					Okta
 				</button>
 			{/if}
 			{#if data.isGithubAvailable}
 				<button
-					on:click={() => signIn('github')}
+					on:click={() => signIn('github', { callbackUrl: '/' })}
 					class="btn w-full bg-black text-white hover:opacity-70 gap-2"
 				>
 					<IconBrandGithub class="invert" />
@@ -67,7 +73,9 @@
 					</label>
 				</form>
 				<div class="flex justify-between flex-wrap">
-					<button on:click={() => signIn('credentials')} class="btn variant-filled-primary"
+					<button
+						on:click={() => signIn('credentials', { callbackUrl: '/' })}
+						class="btn variant-filled-primary"
 						>Login
 					</button>
 				</div>
