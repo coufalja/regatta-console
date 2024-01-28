@@ -1,7 +1,7 @@
+import type { Actions } from './$types';
 import { error } from '@sveltejs/kit';
 
-/** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
 	query: async ({ request, fetch }) => {
 		const data = await request.formData();
 		const table = data.get('table') + '';
