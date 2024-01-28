@@ -5,6 +5,7 @@ import type { StatusResponse } from '$lib/proto/regatta/v1/StatusResponse';
 import type { ClusterClient } from '$lib/proto/regatta/v1/Cluster';
 import type { StatusRequest } from '$lib/proto/regatta/v1/StatusRequest';
 import { apiAddress, credentials, regatta, removeProtocolPrefix } from '$lib/server/grpc';
+import { struct } from '$lib/server/pb';
 
 export interface Cluster {
 	memberList(argument: MemberListRequest, options: grpc.CallOptions): Promise<MemberListResponse>;
@@ -48,7 +49,12 @@ class ClusterImpl implements Cluster {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(value!);
+					const status = value!;
+					if (status.config) {
+						// @ts-expect-error this is a crutch, for missing autogen code.
+						status.config = struct.decode(status.config);
+					}
+					resolve(status);
 				}
 			});
 		});

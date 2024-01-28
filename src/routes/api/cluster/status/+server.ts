@@ -5,5 +5,5 @@ export const GET: RequestHandler = async ({ url }): Promise<Response> => {
 	if (!url.searchParams.has('target')) {
 		error(412, 'must provide target query parameter');
 	}
-	return json(await cluster.status({}, url.searchParams.get('target')!));
+	return json(await cluster.status({ config: true }, url.searchParams.get('target')!));
 };
