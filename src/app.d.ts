@@ -1,11 +1,7 @@
 import 'unplugin-icons/types/svelte';
-import type { Session } from '@auth/sveltekit';
 
 declare namespace App {
-	interface Locals {
-		session?: Session;
-	}
-
+	// interface Locals {}
 	// interface PageData {}
 	// interface Error {}
 	// interface Platform {}
