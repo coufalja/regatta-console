@@ -1,5 +1,5 @@
 import type * as grpc from '@grpc/grpc-js';
-import type { MessageTypeDefinition } from '@grpc/proto-loader';
+import type { EnumTypeDefinition, MessageTypeDefinition } from '@grpc/proto-loader';
 
 import type { ClusterClient as _regatta_v1_ClusterClient, ClusterDefinition as _regatta_v1_ClusterDefinition } from './regatta/v1/Cluster';
 import type { KVClient as _regatta_v1_KVClient, KVDefinition as _regatta_v1_KVDefinition } from './regatta/v1/KV';
@@ -9,6 +9,14 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 };
 
 export interface ProtoGrpcType {
+  google: {
+    protobuf: {
+      ListValue: MessageTypeDefinition
+      NullValue: EnumTypeDefinition
+      Struct: MessageTypeDefinition
+      Value: MessageTypeDefinition
+    }
+  }
   mvcc: {
     v1: {
       Command: MessageTypeDefinition

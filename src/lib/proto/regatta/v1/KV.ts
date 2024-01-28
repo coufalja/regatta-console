@@ -21,6 +21,11 @@ export interface KVClient extends grpc.Client {
   deleteRange(argument: _regatta_v1_DeleteRangeRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_regatta_v1_DeleteRangeResponse__Output>): grpc.ClientUnaryCall;
   deleteRange(argument: _regatta_v1_DeleteRangeRequest, callback: grpc.requestCallback<_regatta_v1_DeleteRangeResponse__Output>): grpc.ClientUnaryCall;
   
+  IterateRange(argument: _regatta_v1_RangeRequest, metadata: grpc.Metadata, options?: grpc.CallOptions): grpc.ClientReadableStream<_regatta_v1_RangeResponse__Output>;
+  IterateRange(argument: _regatta_v1_RangeRequest, options?: grpc.CallOptions): grpc.ClientReadableStream<_regatta_v1_RangeResponse__Output>;
+  iterateRange(argument: _regatta_v1_RangeRequest, metadata: grpc.Metadata, options?: grpc.CallOptions): grpc.ClientReadableStream<_regatta_v1_RangeResponse__Output>;
+  iterateRange(argument: _regatta_v1_RangeRequest, options?: grpc.CallOptions): grpc.ClientReadableStream<_regatta_v1_RangeResponse__Output>;
+  
   Put(argument: _regatta_v1_PutRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_regatta_v1_PutResponse__Output>): grpc.ClientUnaryCall;
   Put(argument: _regatta_v1_PutRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_regatta_v1_PutResponse__Output>): grpc.ClientUnaryCall;
   Put(argument: _regatta_v1_PutRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_regatta_v1_PutResponse__Output>): grpc.ClientUnaryCall;
@@ -53,6 +58,8 @@ export interface KVClient extends grpc.Client {
 export interface KVHandlers extends grpc.UntypedServiceImplementation {
   DeleteRange: grpc.handleUnaryCall<_regatta_v1_DeleteRangeRequest__Output, _regatta_v1_DeleteRangeResponse>;
   
+  IterateRange: grpc.handleServerStreamingCall<_regatta_v1_RangeRequest__Output, _regatta_v1_RangeResponse>;
+  
   Put: grpc.handleUnaryCall<_regatta_v1_PutRequest__Output, _regatta_v1_PutResponse>;
   
   Range: grpc.handleUnaryCall<_regatta_v1_RangeRequest__Output, _regatta_v1_RangeResponse>;
@@ -63,6 +70,7 @@ export interface KVHandlers extends grpc.UntypedServiceImplementation {
 
 export interface KVDefinition extends grpc.ServiceDefinition {
   DeleteRange: MethodDefinition<_regatta_v1_DeleteRangeRequest, _regatta_v1_DeleteRangeResponse, _regatta_v1_DeleteRangeRequest__Output, _regatta_v1_DeleteRangeResponse__Output>
+  IterateRange: MethodDefinition<_regatta_v1_RangeRequest, _regatta_v1_RangeResponse, _regatta_v1_RangeRequest__Output, _regatta_v1_RangeResponse__Output>
   Put: MethodDefinition<_regatta_v1_PutRequest, _regatta_v1_PutResponse, _regatta_v1_PutRequest__Output, _regatta_v1_PutResponse__Output>
   Range: MethodDefinition<_regatta_v1_RangeRequest, _regatta_v1_RangeResponse, _regatta_v1_RangeRequest__Output, _regatta_v1_RangeResponse__Output>
   Txn: MethodDefinition<_regatta_v1_TxnRequest, _regatta_v1_TxnResponse, _regatta_v1_TxnRequest__Output, _regatta_v1_TxnResponse__Output>
