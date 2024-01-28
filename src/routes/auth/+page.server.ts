@@ -4,13 +4,13 @@ import {
 	isGoogleAvailable,
 	isOktaAvailable
 } from '$lib/server/auth';
+import type { PageServerLoad } from './$types';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load() {
+export const load: PageServerLoad = () => {
 	return {
 		isGoogleAvailable,
 		isGithubAvailable,
 		isOktaAvailable,
 		isCredentialsAvailable
 	};
-}
+};
