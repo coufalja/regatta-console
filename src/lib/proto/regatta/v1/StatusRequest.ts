@@ -2,7 +2,9 @@
 
 
 export interface StatusRequest {
+  'config'?: (boolean);
 }
 
 export interface StatusRequest__Output {
+  'config': (boolean);
 }
