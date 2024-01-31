@@ -24,6 +24,7 @@
 	import javascript from 'highlight.js/lib/languages/javascript';
 	import typescript from 'highlight.js/lib/languages/typescript';
 	import shell from 'highlight.js/lib/languages/shell';
+	import plaintext from 'highlight.js/lib/languages/plaintext';
 	// Register each imported language module
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
@@ -31,6 +32,7 @@
 	hljs.registerLanguage('javascript', javascript);
 	hljs.registerLanguage('typescript', typescript);
 	hljs.registerLanguage('shell', shell);
+	hljs.registerLanguage('plaintext', plaintext);
 
 	storeHighlightJs.set(hljs);
 </script>

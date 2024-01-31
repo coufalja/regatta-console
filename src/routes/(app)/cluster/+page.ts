@@ -10,8 +10,21 @@ export const load: PageLoad = async ({ fetch }) => {
 		const status = await sr.json();
 		statuses.set(member?.id, status);
 	}
+	const config: { [key: string]: string | boolean | number | object | [] } = {};
+	for (const status of statuses.values()) {
+		for (const [k, v] of Object.entries(status.config)) {
+			if (v) {
+				if (config[k] && JSON.stringify(config[k]) != JSON.stringify(v)) {
+					config[k] = 'overridden per host';
+				} else {
+					config[k] = v;
+				}
+			}
+		}
+	}
 	return {
 		members,
-		statuses
+		statuses,
+		config
 	};
 };
